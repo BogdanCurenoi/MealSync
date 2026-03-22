@@ -5,8 +5,22 @@ const placeOrder = async (req, res) => {
 
     if (!items || items.length === 0) return res.status(400).json({ message: 'Cart is empty' });
 
-    const total_price = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+    let total_price = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
     const delivery_cost = items.reduce((sum, i) => sum + i.delivery_cost, 0);
+
+    if (user_coupon_id) {
+        const [couponRows] = await db.query(
+            `SELECT uc.*, ct.discount_percent FROM user_coupons uc
+             JOIN coupon_types ct ON uc.coupon_type_id = ct.id
+             WHERE uc.id = ? AND uc.user_id = ? AND uc.is_used = 0 AND uc.expires_at > NOW()`,
+            [user_coupon_id, req.user.id]
+        );
+        if (couponRows.length > 0) {
+            const discount = couponRows[0].discount_percent;
+            total_price = +(total_price - (total_price * discount / 100)).toFixed(2);
+            await db.query('UPDATE user_coupons SET is_used = 1, used_at = NOW() WHERE id = ?', [user_coupon_id]);
+        }
+    }
 
     const [result] = await db.query(
         'INSERT INTO orders (user_id, user_coupon_id, total_price, delivery_cost) VALUES (?,?,?,?)',
@@ -22,9 +36,13 @@ const placeOrder = async (req, res) => {
         );
     }
 
-    res.status(201).json({ message: 'Order placed', order_id: orderId });
-};
+    const pointsEarned = Math.floor((total_price + delivery_cost) / 10);
+    if (pointsEarned > 0) {
+        await db.query('UPDATE users SET loyalty_points = loyalty_points + ? WHERE id = ?', [pointsEarned, req.user.id]);
+    }
 
+    res.status(201).json({ message: 'Order placed', order_id: orderId, points_earned: pointsEarned });
+};
 
 const getUserOrders = async (req, res) => {
     const page = parseInt(req.query.page) || 1;

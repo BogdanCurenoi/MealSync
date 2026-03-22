@@ -69,7 +69,7 @@ export default function Register() {
                             Create an account 🍽️
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: 'center', mb: 4 }}>
-                            Join MealSync and start eating smarter
+                            Join NutriBloom and start eating smarter
                         </Typography>
 
                         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>

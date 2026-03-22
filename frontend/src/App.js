@@ -13,6 +13,15 @@ import Diets from './pages/Diets';
 import DietDetail from './pages/DietDetail';
 import Profile from './pages/Profile';
 import Cart from './pages/Cart';
+import Coupons from './pages/Coupons';
+import Subscriptions from './pages/Subscriptions';
+import AdminRoute from './components/AdminRoute';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminMeals from './pages/admin/AdminMeals';
+import AdminMenus from './pages/admin/AdminMenus';
+import AdminDiets from './pages/admin/AdminDiets';
+import AdminOrders from './pages/admin/AdminOrders';
 
 function App() {
     return (
@@ -30,8 +39,15 @@ function App() {
                     <Route path="/diets" element={<Diets />} />
                     <Route path="/diets/:id" element={<DietDetail />} />
                     <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-                    <Route path="/subscriptions" element={<ProtectedRoute><div>Subscriptions</div></ProtectedRoute>} />
                     <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                    <Route path="/coupons" element={<ProtectedRoute><Coupons /></ProtectedRoute>} />
+                    <Route path="/subscriptions" element={<ProtectedRoute><Subscriptions /></ProtectedRoute>} />
+                    <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+                    <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
+                    <Route path="/admin/meals" element={<AdminRoute><AdminMeals /></AdminRoute>} />
+                    <Route path="/admin/menus" element={<AdminRoute><AdminMenus /></AdminRoute>} />
+                    <Route path="/admin/diets" element={<AdminRoute><AdminDiets /></AdminRoute>} />
+                    <Route path="/admin/orders" element={<AdminRoute><AdminOrders /></AdminRoute>} />
                 </Routes>
             </Box>
         </BrowserRouter>

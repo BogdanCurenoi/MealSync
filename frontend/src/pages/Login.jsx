@@ -56,7 +56,7 @@ export default function Login() {
                             Welcome back 👋
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: 'center', mb: 4 }}>
-                            Log in to your MealSync account
+                            Log in to your NutriBloom account
                         </Typography>
 
                         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>

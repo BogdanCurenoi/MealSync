@@ -115,7 +115,7 @@ export default function Home() {
             <Box sx={{ py: 10, backgroundColor: '#FFFFFF' }}>
                 <Container maxWidth="xl" sx={{ px: { xs: 3, md: 6 } }}>
                     <Typography variant="h4" sx={{ textAlign: 'center', fontWeight: 700, mb: 1 }}>
-                        Why Choose <span style={{ color: '#E63946' }}>MealSync?</span>
+                        Why Choose <span style={{ color: '#E63946' }}>NutriBloom?</span>
                     </Typography>
                     <Typography variant="body1" sx={{ textAlign: 'center', color: 'text.secondary', mb: 6 }}>
                         We make healthy eating effortless

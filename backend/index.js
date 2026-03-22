@@ -10,6 +10,9 @@ const menuRoutes = require('./routes/menuRoutes');
 const dietRoutes = require('./routes/dietRoutes');
 const userRoutes = require('./routes/userRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const couponRoutes = require('./routes/couponRoutes');
+const subscriptionRoutes = require('./routes/subscriptionRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
@@ -24,6 +27,9 @@ app.use('/api/menus', menuRoutes);
 app.use('/api/diets', dietRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/coupons', couponRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/admin', adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

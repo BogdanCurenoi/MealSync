@@ -17,6 +17,7 @@ export const AuthProvider = ({ children, onLogout }) => {
     const logout = async () => {
         await axios.post('http://localhost:5000/api/auth/logout', {}, { withCredentials: true });
         setUser(null);
+        localStorage.removeItem('mealsync_cart');
         if (onLogout) onLogout();
     };
 

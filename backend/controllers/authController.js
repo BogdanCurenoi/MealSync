@@ -24,7 +24,12 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     const { login_user, login_password } = req.body;
 
-    const [rows] = await db.query('SELECT * FROM users WHERE login_user = ?', [login_user]);
+    const [rows] = await db.query(
+        `SELECT u.*, r.role_permission FROM users u
+         JOIN roles r ON u.role = r.id
+         WHERE u.login_user = ?`,
+        [login_user]
+    );
     if (rows.length === 0) return res.status(401).json({ message: 'Invalid credentials' });
 
     const user = rows[0];
@@ -32,7 +37,7 @@ const login = async (req, res) => {
     if (!match) return res.status(401).json({ message: 'Invalid credentials' });
 
     const token = jwt.sign(
-        { id: user.id, role: user.role },
+        { id: user.id, role: user.role, role_permission: user.role_permission },
         process.env.JWT_SECRET,
         { expiresIn: '7d' }
     );
@@ -48,6 +53,7 @@ const login = async (req, res) => {
         user_name: user.user_name,
         user_surname: user.user_surname,
         role: user.role,
+        role_permission: user.role_permission,
         loyalty_points: user.loyalty_points
     });
 };
@@ -58,7 +64,12 @@ const logout = (req, res) => {
 };
 
 const me = async (req, res) => {
-    const [rows] = await db.query('SELECT id, login_user, user_name, user_surname, role, loyalty_points FROM users WHERE id = ?', [req.user.id]);
+    const [rows] = await db.query(
+        `SELECT u.id, u.login_user, u.user_name, u.user_surname, u.role, u.loyalty_points, r.role_permission
+         FROM users u JOIN roles r ON u.role = r.id
+         WHERE u.id = ?`,
+        [req.user.id]
+    );
     if (rows.length === 0) return res.status(404).json({ message: 'User not found' });
     res.json(rows[0]);
 };

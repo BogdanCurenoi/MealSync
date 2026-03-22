@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: 127.0.0.1
--- Timp de generare: mart. 15, 2026 la 01:45 PM
+-- Timp de generare: mart. 22, 2026 la 11:14 AM
 -- Versiune server: 10.4.32-MariaDB
--- Versiune PHP: 8.2.12
+-- Versiune PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -66,6 +66,15 @@ CREATE TABLE `coupon_types` (
   `loyalty_cost` int(11) NOT NULL,
   `expiry_days` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Eliminarea datelor din tabel `coupon_types`
+--
+
+INSERT INTO `coupon_types` (`id`, `coupon_name`, `discount_percent`, `discount_fixed`, `loyalty_cost`, `expiry_days`) VALUES
+(1, '-10% Off Order', 10, NULL, 25, 30),
+(2, '-20% Off Order', 20, NULL, 45, 30),
+(3, '-30% Off Order', 30, NULL, 60, 30);
 
 -- --------------------------------------------------------
 
@@ -135,7 +144,8 @@ INSERT INTO `meals` (`id`, `calories`, `vegan_flag`, `price`, `discount`, `deliv
 (3, 480, 0, 38, 15, 5, '/uploads/meals/meal3.jpg', 'Pan-seared salmon fillet with steamed broccoli and spinach.', 'Salmon & Greens'),
 (4, 390, 0, 25, 25, 5, '/uploads/meals/meal4.jpg', 'Whole wheat wrap with lean turkey, lettuce and hummus.', 'Turkey Wrap'),
 (5, 310, 1, 20, 0, 5, '/uploads/meals/meal5.jpg', 'Hearty red lentil soup with cumin and fresh herbs.', 'Lentil Soup'),
-(6, 280, 0, 22, 0, 5, '/uploads/meals/meal6.jpg', 'Fluffy egg white omelette with spinach, tomatoes and feta.', 'Egg White Omelette');
+(6, 280, 0, 22.5, 0, 5, '/uploads/meals/meal6.jpg', 'Fluffy egg white omelette with spinach, tomatoes and feta.', 'Egg White Omelette'),
+(7, 612, 0, 66, 0, 5, '/uploads/meals/1774172884979.jpg', 'test', 'test meal');
 
 -- --------------------------------------------------------
 
@@ -154,8 +164,9 @@ CREATE TABLE `meal_alergies` (
 --
 
 INSERT INTO `meal_alergies` (`id`, `meal_id`, `alergy_id`) VALUES
-(1, 1, 1),
-(2, 1, 2);
+(11, 1, 3),
+(12, 1, 11),
+(15, 2, 14);
 
 -- --------------------------------------------------------
 
@@ -202,9 +213,9 @@ INSERT INTO `menu_meals` (`id`, `menu_id`, `meal_id`) VALUES
 (1, 1, 1),
 (2, 1, 3),
 (3, 1, 4),
-(4, 2, 2),
-(5, 2, 5),
-(6, 2, 6);
+(13, 2, 2),
+(14, 2, 5),
+(15, 2, 6);
 
 -- --------------------------------------------------------
 
@@ -227,7 +238,12 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `user_id`, `user_coupon_id`, `total_price`, `delivery_cost`, `created_at`) VALUES
 (2, 1, NULL, 85, 5, '2026-03-14 17:04:25'),
-(3, 1, NULL, 99.8, 10, '2026-03-14 17:19:36');
+(3, 1, NULL, 99.8, 10, '2026-03-14 17:19:36'),
+(4, 1, NULL, 170, 5, '2026-03-22 10:32:27'),
+(5, 1, NULL, 255, 5, '2026-03-22 10:32:35'),
+(6, 1, 1, 60.75, 5, '2026-03-22 10:33:00'),
+(7, 1, NULL, 255, 5, '2026-03-22 10:33:14'),
+(8, 2, NULL, 66, 5, '2026-03-22 12:14:12');
 
 -- --------------------------------------------------------
 
@@ -251,7 +267,12 @@ CREATE TABLE `order_items` (
 INSERT INTO `order_items` (`id`, `order_id`, `meal_id`, `menu_id`, `quantity`, `item_price`) VALUES
 (2, 2, NULL, 1, 1, 85),
 (3, 3, 3, NULL, 1, 32.3),
-(4, 3, NULL, 2, 1, 67.5);
+(4, 3, NULL, 2, 1, 67.5),
+(5, 4, NULL, 1, 2, 85),
+(6, 5, NULL, 1, 3, 85),
+(7, 6, NULL, 2, 1, 67.5),
+(8, 7, NULL, 1, 3, 85),
+(9, 8, 7, NULL, 1, 66);
 
 -- --------------------------------------------------------
 
@@ -285,6 +306,14 @@ CREATE TABLE `subscription_menus` (
   `menu_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Eliminarea datelor din tabel `subscription_menus`
+--
+
+INSERT INTO `subscription_menus` (`id`, `user_subscription_id`, `menu_id`) VALUES
+(2, 1, 2),
+(3, 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -297,6 +326,20 @@ CREATE TABLE `subscription_plans` (
   `duration_months` int(11) NOT NULL,
   `discount_percent` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Eliminarea datelor din tabel `subscription_plans`
+--
+
+INSERT INTO `subscription_plans` (`id`, `subscription_type_id`, `duration_months`, `discount_percent`) VALUES
+(1, 1, 1, 0),
+(2, 1, 3, 10),
+(3, 1, 6, 15),
+(4, 1, 12, 25),
+(5, 2, 1, 0),
+(6, 2, 3, 10),
+(7, 2, 6, 15),
+(8, 2, 12, 25);
 
 -- --------------------------------------------------------
 
@@ -312,6 +355,14 @@ CREATE TABLE `subscription_types` (
   `max_daily_menus` int(11) NOT NULL,
   `delivery_discount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Eliminarea datelor din tabel `subscription_types`
+--
+
+INSERT INTO `subscription_types` (`id`, `type_name`, `price_per_month`, `daily_loyalty_points`, `max_daily_menus`, `delivery_discount`) VALUES
+(1, 'Premium', 99, 10, 1, 50),
+(2, 'Platinum', 179, 25, 3, 100);
 
 -- --------------------------------------------------------
 
@@ -337,7 +388,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login_user`, `login_password`, `role`, `user_name`, `user_surname`, `user_age`, `user_email`, `user_address`, `loyalty_points`) VALUES
-(1, 'test', '$2b$10$iYHe8cbDb7337HenZ2PZuu/Oi/jx1NQ6q8VgknvAWZQJ6rGyAO.HK', 1, 'test', 'test', 22, 'test@test.test', 'test test test', 0);
+(1, 'test', '$2b$10$iYHe8cbDb7337HenZ2PZuu/Oi/jx1NQ6q8VgknvAWZQJ6rGyAO.HK', 1, 'test', 'test', 22, 'test@test.test', 'test test test', 5),
+(2, 'admin', '$2b$10$HAwOp9Eda3p4BydNxSfWmOgjaYxvAqgGD9d9/2dCAjRNhBSHmg83a', 2, 'admin', 'admin', 99, 'admin@admin.com', 'admin', 7);
 
 -- --------------------------------------------------------
 
@@ -374,6 +426,14 @@ CREATE TABLE `user_coupons` (
   `used_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Eliminarea datelor din tabel `user_coupons`
+--
+
+INSERT INTO `user_coupons` (`id`, `user_id`, `coupon_type_id`, `redeemed_at`, `expires_at`, `is_used`, `used_at`) VALUES
+(1, 1, 1, '2026-03-22 10:32:37', '2026-04-21 10:32:37', 1, '2026-03-22 10:33:00'),
+(2, 1, 2, '2026-03-22 10:42:53', '2026-04-21 10:42:53', 0, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -400,6 +460,14 @@ CREATE TABLE `user_subscriptions` (
   `end_date` date NOT NULL,
   `is_active` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Eliminarea datelor din tabel `user_subscriptions`
+--
+
+INSERT INTO `user_subscriptions` (`id`, `user_id`, `plan_id`, `start_date`, `end_date`, `is_active`) VALUES
+(1, 1, 1, '2026-03-22', '2026-04-22', 0),
+(2, 1, 1, '2026-03-22', '2026-04-22', 1);
 
 --
 -- Indexuri pentru tabele eliminate
@@ -556,7 +624,7 @@ ALTER TABLE `alergies`
 -- AUTO_INCREMENT pentru tabele `coupon_types`
 --
 ALTER TABLE `coupon_types`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pentru tabele `diets`
@@ -574,13 +642,13 @@ ALTER TABLE `diet_menus`
 -- AUTO_INCREMENT pentru tabele `meals`
 --
 ALTER TABLE `meals`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pentru tabele `meal_alergies`
 --
 ALTER TABLE `meal_alergies`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pentru tabele `menus`
@@ -592,19 +660,19 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT pentru tabele `menu_meals`
 --
 ALTER TABLE `menu_meals`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pentru tabele `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pentru tabele `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pentru tabele `roles`
@@ -616,25 +684,25 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT pentru tabele `subscription_menus`
 --
 ALTER TABLE `subscription_menus`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pentru tabele `subscription_plans`
 --
 ALTER TABLE `subscription_plans`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pentru tabele `subscription_types`
 --
 ALTER TABLE `subscription_types`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pentru tabele `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pentru tabele `user_alergies`
@@ -646,7 +714,7 @@ ALTER TABLE `user_alergies`
 -- AUTO_INCREMENT pentru tabele `user_coupons`
 --
 ALTER TABLE `user_coupons`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pentru tabele `user_diets`
@@ -658,7 +726,7 @@ ALTER TABLE `user_diets`
 -- AUTO_INCREMENT pentru tabele `user_subscriptions`
 --
 ALTER TABLE `user_subscriptions`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constrângeri pentru tabele eliminate

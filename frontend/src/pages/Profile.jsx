@@ -1,5 +1,6 @@
-import { Box, Container, Typography, TextField, Button, Paper, Divider, Checkbox, FormControlLabel, Grid, Chip, Pagination } from '@mui/material';
+import { Box, Container, Typography, TextField, Button, Paper, Divider, Checkbox, FormControlLabel, Grid, Chip, Pagination, Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -10,6 +11,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import GrassIcon from '@mui/icons-material/Grass';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 
 const API = 'http://localhost:5000/api/user';
 const inputSx = { '& .MuiOutlinedInput-root': { borderRadius: '12px' } };
@@ -26,6 +29,7 @@ const SectionCard = ({ title, icon, children }) => (
 
 export default function Profile() {
     const { user, setUser } = useAuth();
+    const navigate = useNavigate();
 
     const [profile, setProfile] = useState({ user_name: '', user_surname: '', user_age: '', user_email: '', user_address: '' });
     const [passwords, setPasswords] = useState({ current_password: '', new_password: '', confirm_password: '' });
@@ -34,6 +38,11 @@ export default function Profile() {
     const [dietPage, setDietPage] = useState(1);
     const [orders, setOrders] = useState({ orders: [], totalPages: 1 });
     const [orderPage, setOrderPage] = useState(1);
+    const [myCoupons, setMyCoupons] = useState([]);
+    const [activeSub, setActiveSub] = useState(null);
+    const [allMenus, setAllMenus] = useState([]);
+    const [subMenus, setSubMenus] = useState([]);
+    const [subMenuDialogOpen, setSubMenuDialogOpen] = useState(false);
 
     const dietsPerPage = 5;
     const paginatedDiets = diets.all.slice((dietPage - 1) * dietsPerPage, dietPage * dietsPerPage);
@@ -43,6 +52,9 @@ export default function Profile() {
         axios.get(`${API}/profile`, { withCredentials: true }).then(res => setProfile(res.data));
         axios.get(`${API}/alergies`, { withCredentials: true }).then(res => setAlergies(res.data));
         axios.get(`${API}/diets`, { withCredentials: true }).then(res => setDiets(res.data));
+        axios.get('http://localhost:5000/api/coupons/my', { withCredentials: true }).then(res => setMyCoupons(res.data));
+        axios.get('http://localhost:5000/api/subscriptions/my', { withCredentials: true }).then(res => setActiveSub(res.data));
+        axios.get('http://localhost:5000/api/menus?limit=100').then(res => setAllMenus(res.data.menus));
     }, []);
 
     useEffect(() => {
@@ -104,6 +116,28 @@ export default function Profile() {
             toast.success('Diet preferences updated');
         } catch {
             toast.error('Failed to update diets');
+        }
+    };
+
+    const handleCancelSub = async () => {
+        try {
+            await axios.put('http://localhost:5000/api/subscriptions/cancel', {}, { withCredentials: true });
+            toast.success('Subscription cancelled');
+            setActiveSub(null);
+        } catch {
+            toast.error('Failed to cancel subscription');
+        }
+    };
+
+    const handleUpdateSubMenus = async () => {
+        try {
+            await axios.put('http://localhost:5000/api/subscriptions/menus', { menu_ids: subMenus.filter(Boolean) }, { withCredentials: true });
+            toast.success('Daily menus updated');
+            setSubMenuDialogOpen(false);
+            const res = await axios.get('http://localhost:5000/api/subscriptions/my', { withCredentials: true });
+            setActiveSub(res.data);
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Failed to update menus');
         }
     };
 
@@ -220,6 +254,84 @@ export default function Profile() {
                         </Button>
                     </SectionCard>
 
+                    <SectionCard title="My Coupons" icon={<LocalOfferIcon />}>
+                        {myCoupons.length === 0 ? (
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>No active coupons.</Typography>
+                                <Button variant="outlined" color="primary" size="small" onClick={() => navigate('/coupons')}>Get Coupons</Button>
+                            </Box>
+                        ) : (
+                            <Box>
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mb: 2 }}>
+                                    {myCoupons.map(c => (
+                                        <Box key={c.id} sx={{ border: '2px dashed #E63946', borderRadius: '12px', px: 2, py: 1 }}>
+                                            <Typography variant="body2" sx={{ fontWeight: 700, color: '#E63946' }}>{c.coupon_name}</Typography>
+                                            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                                Expires {new Date(c.expires_at).toLocaleDateString('ro-RO')}
+                                            </Typography>
+                                        </Box>
+                                    ))}
+                                </Box>
+                                <Button variant="outlined" color="primary" size="small" onClick={() => navigate('/coupons')}>Get More Coupons</Button>
+                            </Box>
+                        )}
+                    </SectionCard>
+
+                    <SectionCard title="My Subscription" icon={<SubscriptionsIcon />}>
+                        {!activeSub ? (
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>No active subscription.</Typography>
+                                <Button variant="outlined" color="primary" size="small" onClick={() => navigate('/subscriptions')}>View Plans</Button>
+                            </Box>
+                        ) : (
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 2 }}>
+                                    <Box>
+                                        <Typography variant="h6" sx={{ fontWeight: 700 }}>{activeSub.type_name}</Typography>
+                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                            {activeSub.duration_months} month{activeSub.duration_months > 1 ? 's' : ''} plan
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                            Active until {new Date(activeSub.end_date).toLocaleDateString('ro-RO', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                        </Typography>
+                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                            Total paid: {parseFloat(activeSub.total_paid).toFixed(2)} RON
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                                        <Chip
+                                            label={`${activeSub.daily_loyalty_points} pts/day`}
+                                            sx={{ backgroundColor: '#FFF3C4', color: '#B8860B', fontWeight: 600 }}
+                                        />
+                                        <Chip
+                                            label={activeSub.delivery_discount === 100 ? 'Free Delivery' : `${activeSub.delivery_discount}% off delivery`}
+                                            sx={{ backgroundColor: '#E8F5E9', color: '#2E7D32', fontWeight: 600 }}
+                                        />
+                                    </Box>
+                                </Box>
+
+                                <Divider />
+
+                                <Box>
+                                    <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>Daily Menus</Typography>
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 1.5 }}>
+                                        {activeSub.menus.map(m => (
+                                            <Chip key={m.id} label={m.menu_name} sx={{ backgroundColor: '#F5F5F5', fontWeight: 600 }} />
+                                        ))}
+                                    </Box>
+                                    <Button size="small" variant="outlined" color="primary"
+                                        onClick={() => { setSubMenus(activeSub.menus.map(m => m.id)); setSubMenuDialogOpen(true); }}>
+                                        Change Daily Menus
+                                    </Button>
+                                </Box>
+
+                                <Button variant="outlined" color="error" size="small" sx={{ alignSelf: 'flex-start' }} onClick={handleCancelSub}>
+                                    Cancel Subscription
+                                </Button>
+                            </Box>
+                        )}
+                    </SectionCard>
+
                     <SectionCard title="Order History" icon={<ReceiptLongIcon />}>
                         {orders.orders.length === 0 ? (
                             <Typography variant="body2" sx={{ color: 'text.secondary' }}>You have no orders yet.</Typography>
@@ -269,6 +381,38 @@ export default function Profile() {
 
                 </motion.div>
             </Container>
+
+            <Dialog open={subMenuDialogOpen} onClose={() => setSubMenuDialogOpen(false)} maxWidth="sm" fullWidth
+                PaperProps={{ sx: { borderRadius: '20px', p: 1 } }}>
+                <DialogTitle sx={{ fontWeight: 700 }}>Change Daily Menus</DialogTitle>
+                <DialogContent>
+                    {activeSub && Array.from({ length: activeSub.max_daily_menus }).map((_, i) => (
+                        <FormControl key={i} fullWidth sx={{ mb: 2, mt: i === 0 ? 1 : 0, '& .MuiOutlinedInput-root': { borderRadius: '12px' } }}>
+                            <InputLabel>Menu {activeSub.max_daily_menus > 1 ? i + 1 : ''}</InputLabel>
+                            <Select
+                                value={subMenus[i] || ''}
+                                label={`Menu ${activeSub.max_daily_menus > 1 ? i + 1 : ''}`}
+                                onChange={(e) => {
+                                    const updated = [...subMenus];
+                                    updated[i] = e.target.value;
+                                    setSubMenus(updated);
+                                }}
+                            >
+                                {allMenus.map(m => (
+                                    <MenuItem key={m.id} value={m.id}
+                                        disabled={subMenus.includes(m.id) && subMenus[i] !== m.id}>
+                                        {m.menu_name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    ))}
+                </DialogContent>
+                <DialogActions sx={{ px: 3, pb: 3 }}>
+                    <Button onClick={() => setSubMenuDialogOpen(false)} variant="outlined" color="inherit">Cancel</Button>
+                    <Button onClick={handleUpdateSubMenus} variant="contained" color="primary">Save Changes</Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }
