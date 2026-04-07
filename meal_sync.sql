@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Gazdă: 127.0.0.1
--- Timp de generare: mart. 22, 2026 la 11:14 AM
--- Versiune server: 10.4.32-MariaDB
--- Versiune PHP: 8.0.30
+-- Host: 127.0.0.1
+-- Generation Time: Apr 07, 2026 at 07:03 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Bază de date: `meal_sync`
+-- Database: `meal_sync`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `alergies`
+-- Table structure for table `alergies`
 --
 
 CREATE TABLE `alergies` (
@@ -33,7 +33,7 @@ CREATE TABLE `alergies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `alergies`
+-- Dumping data for table `alergies`
 --
 
 INSERT INTO `alergies` (`id`, `alergy_name`) VALUES
@@ -55,7 +55,7 @@ INSERT INTO `alergies` (`id`, `alergy_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `coupon_types`
+-- Table structure for table `coupon_types`
 --
 
 CREATE TABLE `coupon_types` (
@@ -68,7 +68,7 @@ CREATE TABLE `coupon_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `coupon_types`
+-- Dumping data for table `coupon_types`
 --
 
 INSERT INTO `coupon_types` (`id`, `coupon_name`, `discount_percent`, `discount_fixed`, `loyalty_cost`, `expiry_days`) VALUES
@@ -79,7 +79,7 @@ INSERT INTO `coupon_types` (`id`, `coupon_name`, `discount_percent`, `discount_f
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `diets`
+-- Table structure for table `diets`
 --
 
 CREATE TABLE `diets` (
@@ -90,7 +90,7 @@ CREATE TABLE `diets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `diets`
+-- Dumping data for table `diets`
 --
 
 INSERT INTO `diets` (`id`, `vegan_flag`, `description`, `diet_name`) VALUES
@@ -99,7 +99,7 @@ INSERT INTO `diets` (`id`, `vegan_flag`, `description`, `diet_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `diet_menus`
+-- Table structure for table `diet_menus`
 --
 
 CREATE TABLE `diet_menus` (
@@ -109,7 +109,7 @@ CREATE TABLE `diet_menus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `diet_menus`
+-- Dumping data for table `diet_menus`
 --
 
 INSERT INTO `diet_menus` (`id`, `diet_id`, `menu_id`) VALUES
@@ -119,7 +119,7 @@ INSERT INTO `diet_menus` (`id`, `diet_id`, `menu_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `meals`
+-- Table structure for table `meals`
 --
 
 CREATE TABLE `meals` (
@@ -135,7 +135,7 @@ CREATE TABLE `meals` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `meals`
+-- Dumping data for table `meals`
 --
 
 INSERT INTO `meals` (`id`, `calories`, `vegan_flag`, `price`, `discount`, `delivery_cost`, `image_url`, `description`, `meal_name`) VALUES
@@ -150,7 +150,7 @@ INSERT INTO `meals` (`id`, `calories`, `vegan_flag`, `price`, `discount`, `deliv
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `meal_alergies`
+-- Table structure for table `meal_alergies`
 --
 
 CREATE TABLE `meal_alergies` (
@@ -160,7 +160,7 @@ CREATE TABLE `meal_alergies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `meal_alergies`
+-- Dumping data for table `meal_alergies`
 --
 
 INSERT INTO `meal_alergies` (`id`, `meal_id`, `alergy_id`) VALUES
@@ -171,7 +171,7 @@ INSERT INTO `meal_alergies` (`id`, `meal_id`, `alergy_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `menus`
+-- Table structure for table `menus`
 --
 
 CREATE TABLE `menus` (
@@ -186,7 +186,7 @@ CREATE TABLE `menus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `menus`
+-- Dumping data for table `menus`
 --
 
 INSERT INTO `menus` (`id`, `vegan_flag`, `price`, `discount`, `delivery_cost`, `image_url`, `description`, `menu_name`) VALUES
@@ -196,7 +196,7 @@ INSERT INTO `menus` (`id`, `vegan_flag`, `price`, `discount`, `delivery_cost`, `
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `menu_meals`
+-- Table structure for table `menu_meals`
 --
 
 CREATE TABLE `menu_meals` (
@@ -206,7 +206,7 @@ CREATE TABLE `menu_meals` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `menu_meals`
+-- Dumping data for table `menu_meals`
 --
 
 INSERT INTO `menu_meals` (`id`, `menu_id`, `meal_id`) VALUES
@@ -220,7 +220,7 @@ INSERT INTO `menu_meals` (`id`, `menu_id`, `meal_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `orders`
+-- Table structure for table `orders`
 --
 
 CREATE TABLE `orders` (
@@ -233,7 +233,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `orders`
+-- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `user_coupon_id`, `total_price`, `delivery_cost`, `created_at`) VALUES
@@ -248,7 +248,7 @@ INSERT INTO `orders` (`id`, `user_id`, `user_coupon_id`, `total_price`, `deliver
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `order_items`
+-- Table structure for table `order_items`
 --
 
 CREATE TABLE `order_items` (
@@ -261,7 +261,7 @@ CREATE TABLE `order_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `order_items`
+-- Dumping data for table `order_items`
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `meal_id`, `menu_id`, `quantity`, `item_price`) VALUES
@@ -277,7 +277,7 @@ INSERT INTO `order_items` (`id`, `order_id`, `meal_id`, `menu_id`, `quantity`, `
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -287,7 +287,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id`, `role_name`, `role_permission`) VALUES
@@ -297,7 +297,7 @@ INSERT INTO `roles` (`id`, `role_name`, `role_permission`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `subscription_menus`
+-- Table structure for table `subscription_menus`
 --
 
 CREATE TABLE `subscription_menus` (
@@ -307,7 +307,7 @@ CREATE TABLE `subscription_menus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `subscription_menus`
+-- Dumping data for table `subscription_menus`
 --
 
 INSERT INTO `subscription_menus` (`id`, `user_subscription_id`, `menu_id`) VALUES
@@ -317,7 +317,7 @@ INSERT INTO `subscription_menus` (`id`, `user_subscription_id`, `menu_id`) VALUE
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `subscription_plans`
+-- Table structure for table `subscription_plans`
 --
 
 CREATE TABLE `subscription_plans` (
@@ -328,7 +328,7 @@ CREATE TABLE `subscription_plans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `subscription_plans`
+-- Dumping data for table `subscription_plans`
 --
 
 INSERT INTO `subscription_plans` (`id`, `subscription_type_id`, `duration_months`, `discount_percent`) VALUES
@@ -344,7 +344,7 @@ INSERT INTO `subscription_plans` (`id`, `subscription_type_id`, `duration_months
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `subscription_types`
+-- Table structure for table `subscription_types`
 --
 
 CREATE TABLE `subscription_types` (
@@ -357,7 +357,7 @@ CREATE TABLE `subscription_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `subscription_types`
+-- Dumping data for table `subscription_types`
 --
 
 INSERT INTO `subscription_types` (`id`, `type_name`, `price_per_month`, `daily_loyalty_points`, `max_daily_menus`, `delivery_discount`) VALUES
@@ -367,7 +367,7 @@ INSERT INTO `subscription_types` (`id`, `type_name`, `price_per_month`, `daily_l
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -384,7 +384,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `login_user`, `login_password`, `role`, `user_name`, `user_surname`, `user_age`, `user_email`, `user_address`, `loyalty_points`) VALUES
@@ -394,7 +394,7 @@ INSERT INTO `users` (`id`, `login_user`, `login_password`, `role`, `user_name`, 
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `user_alergies`
+-- Table structure for table `user_alergies`
 --
 
 CREATE TABLE `user_alergies` (
@@ -404,7 +404,7 @@ CREATE TABLE `user_alergies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `user_alergies`
+-- Dumping data for table `user_alergies`
 --
 
 INSERT INTO `user_alergies` (`id`, `user_id`, `alergy_id`) VALUES
@@ -413,7 +413,7 @@ INSERT INTO `user_alergies` (`id`, `user_id`, `alergy_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `user_coupons`
+-- Table structure for table `user_coupons`
 --
 
 CREATE TABLE `user_coupons` (
@@ -427,7 +427,7 @@ CREATE TABLE `user_coupons` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `user_coupons`
+-- Dumping data for table `user_coupons`
 --
 
 INSERT INTO `user_coupons` (`id`, `user_id`, `coupon_type_id`, `redeemed_at`, `expires_at`, `is_used`, `used_at`) VALUES
@@ -437,7 +437,7 @@ INSERT INTO `user_coupons` (`id`, `user_id`, `coupon_type_id`, `redeemed_at`, `e
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `user_diets`
+-- Table structure for table `user_diets`
 --
 
 CREATE TABLE `user_diets` (
@@ -449,7 +449,7 @@ CREATE TABLE `user_diets` (
 -- --------------------------------------------------------
 
 --
--- Structură tabel pentru tabel `user_subscriptions`
+-- Table structure for table `user_subscriptions`
 --
 
 CREATE TABLE `user_subscriptions` (
@@ -462,7 +462,7 @@ CREATE TABLE `user_subscriptions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Eliminarea datelor din tabel `user_subscriptions`
+-- Dumping data for table `user_subscriptions`
 --
 
 INSERT INTO `user_subscriptions` (`id`, `user_id`, `plan_id`, `start_date`, `end_date`, `is_active`) VALUES
@@ -470,29 +470,29 @@ INSERT INTO `user_subscriptions` (`id`, `user_id`, `plan_id`, `start_date`, `end
 (2, 1, 1, '2026-03-22', '2026-04-22', 1);
 
 --
--- Indexuri pentru tabele eliminate
+-- Indexes for dumped tables
 --
 
 --
--- Indexuri pentru tabele `alergies`
+-- Indexes for table `alergies`
 --
 ALTER TABLE `alergies`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexuri pentru tabele `coupon_types`
+-- Indexes for table `coupon_types`
 --
 ALTER TABLE `coupon_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexuri pentru tabele `diets`
+-- Indexes for table `diets`
 --
 ALTER TABLE `diets`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexuri pentru tabele `diet_menus`
+-- Indexes for table `diet_menus`
 --
 ALTER TABLE `diet_menus`
   ADD PRIMARY KEY (`id`),
@@ -500,13 +500,13 @@ ALTER TABLE `diet_menus`
   ADD KEY `menu_id` (`menu_id`);
 
 --
--- Indexuri pentru tabele `meals`
+-- Indexes for table `meals`
 --
 ALTER TABLE `meals`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexuri pentru tabele `meal_alergies`
+-- Indexes for table `meal_alergies`
 --
 ALTER TABLE `meal_alergies`
   ADD PRIMARY KEY (`id`),
@@ -514,13 +514,13 @@ ALTER TABLE `meal_alergies`
   ADD KEY `alergy_id` (`alergy_id`);
 
 --
--- Indexuri pentru tabele `menus`
+-- Indexes for table `menus`
 --
 ALTER TABLE `menus`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexuri pentru tabele `menu_meals`
+-- Indexes for table `menu_meals`
 --
 ALTER TABLE `menu_meals`
   ADD PRIMARY KEY (`id`),
@@ -528,7 +528,7 @@ ALTER TABLE `menu_meals`
   ADD KEY `meal_id` (`meal_id`);
 
 --
--- Indexuri pentru tabele `orders`
+-- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
@@ -536,7 +536,7 @@ ALTER TABLE `orders`
   ADD KEY `user_coupon_id` (`user_coupon_id`);
 
 --
--- Indexuri pentru tabele `order_items`
+-- Indexes for table `order_items`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`),
@@ -545,13 +545,13 @@ ALTER TABLE `order_items`
   ADD KEY `menu_id` (`menu_id`);
 
 --
--- Indexuri pentru tabele `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexuri pentru tabele `subscription_menus`
+-- Indexes for table `subscription_menus`
 --
 ALTER TABLE `subscription_menus`
   ADD PRIMARY KEY (`id`),
@@ -559,27 +559,27 @@ ALTER TABLE `subscription_menus`
   ADD KEY `menu_id` (`menu_id`);
 
 --
--- Indexuri pentru tabele `subscription_plans`
+-- Indexes for table `subscription_plans`
 --
 ALTER TABLE `subscription_plans`
   ADD PRIMARY KEY (`id`),
   ADD KEY `subscription_type_id` (`subscription_type_id`);
 
 --
--- Indexuri pentru tabele `subscription_types`
+-- Indexes for table `subscription_types`
 --
 ALTER TABLE `subscription_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexuri pentru tabele `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `role` (`role`);
 
 --
--- Indexuri pentru tabele `user_alergies`
+-- Indexes for table `user_alergies`
 --
 ALTER TABLE `user_alergies`
   ADD PRIMARY KEY (`id`),
@@ -587,7 +587,7 @@ ALTER TABLE `user_alergies`
   ADD KEY `alergy_id` (`alergy_id`);
 
 --
--- Indexuri pentru tabele `user_coupons`
+-- Indexes for table `user_coupons`
 --
 ALTER TABLE `user_coupons`
   ADD PRIMARY KEY (`id`),
@@ -595,7 +595,7 @@ ALTER TABLE `user_coupons`
   ADD KEY `coupon_type_id` (`coupon_type_id`);
 
 --
--- Indexuri pentru tabele `user_diets`
+-- Indexes for table `user_diets`
 --
 ALTER TABLE `user_diets`
   ADD PRIMARY KEY (`id`),
@@ -603,7 +603,7 @@ ALTER TABLE `user_diets`
   ADD KEY `diet_id` (`diet_id`);
 
 --
--- Indexuri pentru tabele `user_subscriptions`
+-- Indexes for table `user_subscriptions`
 --
 ALTER TABLE `user_subscriptions`
   ADD PRIMARY KEY (`id`),
@@ -611,157 +611,157 @@ ALTER TABLE `user_subscriptions`
   ADD KEY `plan_id` (`plan_id`);
 
 --
--- AUTO_INCREMENT pentru tabele eliminate
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pentru tabele `alergies`
+-- AUTO_INCREMENT for table `alergies`
 --
 ALTER TABLE `alergies`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT pentru tabele `coupon_types`
+-- AUTO_INCREMENT for table `coupon_types`
 --
 ALTER TABLE `coupon_types`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT pentru tabele `diets`
+-- AUTO_INCREMENT for table `diets`
 --
 ALTER TABLE `diets`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT pentru tabele `diet_menus`
+-- AUTO_INCREMENT for table `diet_menus`
 --
 ALTER TABLE `diet_menus`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pentru tabele `meals`
+-- AUTO_INCREMENT for table `meals`
 --
 ALTER TABLE `meals`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT pentru tabele `meal_alergies`
+-- AUTO_INCREMENT for table `meal_alergies`
 --
 ALTER TABLE `meal_alergies`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT pentru tabele `menus`
+-- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pentru tabele `menu_meals`
+-- AUTO_INCREMENT for table `menu_meals`
 --
 ALTER TABLE `menu_meals`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT pentru tabele `orders`
+-- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT pentru tabele `order_items`
+-- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT pentru tabele `roles`
+-- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pentru tabele `subscription_menus`
+-- AUTO_INCREMENT for table `subscription_menus`
 --
 ALTER TABLE `subscription_menus`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT pentru tabele `subscription_plans`
+-- AUTO_INCREMENT for table `subscription_plans`
 --
 ALTER TABLE `subscription_plans`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT pentru tabele `subscription_types`
+-- AUTO_INCREMENT for table `subscription_types`
 --
 ALTER TABLE `subscription_types`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pentru tabele `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pentru tabele `user_alergies`
+-- AUTO_INCREMENT for table `user_alergies`
 --
 ALTER TABLE `user_alergies`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT pentru tabele `user_coupons`
+-- AUTO_INCREMENT for table `user_coupons`
 --
 ALTER TABLE `user_coupons`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT pentru tabele `user_diets`
+-- AUTO_INCREMENT for table `user_diets`
 --
 ALTER TABLE `user_diets`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT pentru tabele `user_subscriptions`
+-- AUTO_INCREMENT for table `user_subscriptions`
 --
 ALTER TABLE `user_subscriptions`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constrângeri pentru tabele eliminate
+-- Constraints for dumped tables
 --
 
 --
--- Constrângeri pentru tabele `diet_menus`
+-- Constraints for table `diet_menus`
 --
 ALTER TABLE `diet_menus`
   ADD CONSTRAINT `diet_menus_ibfk_1` FOREIGN KEY (`diet_id`) REFERENCES `diets` (`id`),
   ADD CONSTRAINT `diet_menus_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`);
 
 --
--- Constrângeri pentru tabele `meal_alergies`
+-- Constraints for table `meal_alergies`
 --
 ALTER TABLE `meal_alergies`
   ADD CONSTRAINT `meal_alergies_ibfk_1` FOREIGN KEY (`meal_id`) REFERENCES `meals` (`id`),
   ADD CONSTRAINT `meal_alergies_ibfk_2` FOREIGN KEY (`alergy_id`) REFERENCES `alergies` (`id`);
 
 --
--- Constrângeri pentru tabele `menu_meals`
+-- Constraints for table `menu_meals`
 --
 ALTER TABLE `menu_meals`
   ADD CONSTRAINT `menu_meals_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`),
   ADD CONSTRAINT `menu_meals_ibfk_2` FOREIGN KEY (`meal_id`) REFERENCES `meals` (`id`);
 
 --
--- Constrângeri pentru tabele `orders`
+-- Constraints for table `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_coupon_id`) REFERENCES `user_coupons` (`id`);
 
 --
--- Constrângeri pentru tabele `order_items`
+-- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
@@ -769,47 +769,47 @@ ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_3` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`);
 
 --
--- Constrângeri pentru tabele `subscription_menus`
+-- Constraints for table `subscription_menus`
 --
 ALTER TABLE `subscription_menus`
   ADD CONSTRAINT `subscription_menus_ibfk_1` FOREIGN KEY (`user_subscription_id`) REFERENCES `user_subscriptions` (`id`),
   ADD CONSTRAINT `subscription_menus_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`);
 
 --
--- Constrângeri pentru tabele `subscription_plans`
+-- Constraints for table `subscription_plans`
 --
 ALTER TABLE `subscription_plans`
   ADD CONSTRAINT `subscription_plans_ibfk_1` FOREIGN KEY (`subscription_type_id`) REFERENCES `subscription_types` (`id`);
 
 --
--- Constrângeri pentru tabele `users`
+-- Constraints for table `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role`) REFERENCES `roles` (`id`);
 
 --
--- Constrângeri pentru tabele `user_alergies`
+-- Constraints for table `user_alergies`
 --
 ALTER TABLE `user_alergies`
   ADD CONSTRAINT `user_alergies_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `user_alergies_ibfk_2` FOREIGN KEY (`alergy_id`) REFERENCES `alergies` (`id`);
 
 --
--- Constrângeri pentru tabele `user_coupons`
+-- Constraints for table `user_coupons`
 --
 ALTER TABLE `user_coupons`
   ADD CONSTRAINT `user_coupons_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `user_coupons_ibfk_2` FOREIGN KEY (`coupon_type_id`) REFERENCES `coupon_types` (`id`);
 
 --
--- Constrângeri pentru tabele `user_diets`
+-- Constraints for table `user_diets`
 --
 ALTER TABLE `user_diets`
   ADD CONSTRAINT `user_diets_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `user_diets_ibfk_2` FOREIGN KEY (`diet_id`) REFERENCES `diets` (`id`);
 
 --
--- Constrângeri pentru tabele `user_subscriptions`
+-- Constraints for table `user_subscriptions`
 --
 ALTER TABLE `user_subscriptions`
   ADD CONSTRAINT `user_subscriptions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
