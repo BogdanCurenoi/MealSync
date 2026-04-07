@@ -22,9 +22,9 @@ export default function Cart() {
     const [activeSub, setActiveSub] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/coupons/my', { withCredentials: true })
+        axios.get('/api/coupons/my', { withCredentials: true })
             .then(res => setMyCoupons(res.data));
-        axios.get('http://localhost:5000/api/subscriptions/my', { withCredentials: true })
+        axios.get('/api/subscriptions/my', { withCredentials: true })
             .then(res => setActiveSub(res.data));
     }, []);
 
@@ -45,7 +45,7 @@ export default function Cart() {
 
     const handleOrder = async () => {
         try {
-            const res = await axios.post('http://localhost:5000/api/orders',
+            const res = await axios.post('/api/orders',
                 { items: cart, user_coupon_id: selectedCoupon || null },
                 { withCredentials: true }
             );
@@ -87,7 +87,7 @@ export default function Cart() {
                                     {item.image_url && (
                                         <Box
                                             component="img"
-                                            src={`http://localhost:5000${item.image_url}`}
+                                            src={`${item.image_url}`}
                                             alt={item.name}
                                             sx={{ width: 70, height: 70, borderRadius: '12px', objectFit: 'cover' }}
                                         />

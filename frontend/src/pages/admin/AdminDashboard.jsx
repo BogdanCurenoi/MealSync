@@ -23,7 +23,7 @@ export default function AdminDashboard() {
     const [stats, setStats] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/admin/stats', { withCredentials: true }).then(res => setStats(res.data));
+        axios.get('/api/admin/stats', { withCredentials: true }).then(res => setStats(res.data));
     }, []);
 
     if (!stats) return <AdminLayout><Typography>Loading...</Typography></AdminLayout>;

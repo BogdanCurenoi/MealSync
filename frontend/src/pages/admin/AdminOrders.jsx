@@ -47,7 +47,7 @@ export default function AdminOrders() {
     const [page, setPage] = useState(1);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/admin/orders', { withCredentials: true }).then(res => setOrders(res.data));
+        axios.get('/api/admin/orders', { withCredentials: true }).then(res => setOrders(res.data));
     }, []);
 
     const pageCount = Math.ceil(orders.length / PER_PAGE);

@@ -15,13 +15,13 @@ export default function AdminUsers() {
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
 
-    const fetch = () => axios.get('http://localhost:5000/api/admin/users', { withCredentials: true }).then(res => setUsers(res.data));
+    const fetch = () => axios.get('/api/admin/users', { withCredentials: true }).then(res => setUsers(res.data));
     useEffect(() => { fetch(); }, []);
 
     const handleDelete = async (id) => {
         if (id === me.id) return toast.error("You can't delete yourself");
         try {
-            await axios.delete(`http://localhost:5000/api/admin/users/${id}`, { withCredentials: true });
+            await axios.delete(`/api/admin/users/${id}`, { withCredentials: true });
             toast.success('User deleted');
             fetch();
         } catch {

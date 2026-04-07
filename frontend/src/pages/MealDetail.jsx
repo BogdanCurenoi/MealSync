@@ -19,7 +19,7 @@ export default function MealDetail() {
     const { user } = useAuth();
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/meals/${id}`).then(res => setMeal(res.data));
+        axios.get(`/api/meals/${id}`).then(res => setMeal(res.data));
     }, [id]);
 
     const handleAddToCart = () => {
@@ -49,7 +49,7 @@ export default function MealDetail() {
                     }}>
                         <Box
                             component="img"
-                            src={`http://localhost:5000${meal.image_url}`}
+                            src={`${meal.image_url}`}
                             alt={meal.meal_name}
                             sx={{ width: '100%', height: '360px', objectFit: 'cover' }}
                         />

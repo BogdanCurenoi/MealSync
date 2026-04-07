@@ -20,8 +20,8 @@ export default function AdminDiets() {
     const [page, setPage] = useState(1);
 
     const load = () => Promise.all([
-        axios.get('http://localhost:5000/api/admin/diets', { withCredentials: true }),
-        axios.get('http://localhost:5000/api/admin/menus', { withCredentials: true })
+        axios.get('/api/admin/diets', { withCredentials: true }),
+        axios.get('/api/admin/menus', { withCredentials: true })
     ]).then(([d, m]) => { setDiets(d.data); setMenus(m.data); });
 
     useEffect(() => { load(); }, []);
@@ -41,10 +41,10 @@ export default function AdminDiets() {
     const handleSave = async () => {
         try {
             if (editing) {
-                await axios.put(`http://localhost:5000/api/admin/diets/${editing.id}`, form, { withCredentials: true });
+                await axios.put(`/api/admin/diets/${editing.id}`, form, { withCredentials: true });
                 toast.success('Diet updated');
             } else {
-                await axios.post('http://localhost:5000/api/admin/diets', form, { withCredentials: true });
+                await axios.post('/api/admin/diets', form, { withCredentials: true });
                 toast.success('Diet created');
             }
             setDialogOpen(false);
@@ -56,7 +56,7 @@ export default function AdminDiets() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/admin/diets/${id}`, { withCredentials: true });
+            await axios.delete(`/api/admin/diets/${id}`, { withCredentials: true });
             toast.success('Diet deleted');
             load();
         } catch {

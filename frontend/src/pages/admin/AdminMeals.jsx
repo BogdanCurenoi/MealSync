@@ -7,7 +7,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 
-const API = 'http://localhost:5000/api/admin';
+const API = '/api/admin';
 const emptyMeal = { meal_name: '', description: '', calories: '', price: '', discount: '0', delivery_cost: '', vegan_flag: false, alergy_ids: [] };
 const inputSx = { '& .MuiOutlinedInput-root': { borderRadius: '12px' } };
 const PER_PAGE = 5;

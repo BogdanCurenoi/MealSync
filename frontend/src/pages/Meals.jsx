@@ -32,7 +32,7 @@ export default function Meals() {
         if (appliedFilters.vegan) params.append('vegan', 'true');
         if (user?.id) params.append('user_id', user.id);
 
-        axios.get(`http://localhost:5000/api/meals?${params.toString()}`)
+        axios.get(`/api/meals?${params.toString()}`)
             .then(res => setData(res.data));
     }, [page, appliedFilters, user]);
 
@@ -121,7 +121,7 @@ export default function Meals() {
                                     <CardMedia
                                         component="img"
                                         height="200"
-                                        image={`http://localhost:5000${meal.image_url}`}
+                                        image={`${meal.image_url}`}
                                         alt={meal.meal_name}
                                         sx={{ objectFit: 'cover' }}
                                     />

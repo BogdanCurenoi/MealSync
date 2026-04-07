@@ -20,9 +20,9 @@ export default function Subscriptions() {
     const [selectedMenus, setSelectedMenus] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/subscriptions/plans').then(res => setPlans(res.data));
-        axios.get('http://localhost:5000/api/menus?limit=100').then(res => setMenus(res.data.menus));
-        axios.get('http://localhost:5000/api/subscriptions/my', { withCredentials: true }).then(res => setActiveSub(res.data));
+        axios.get('/api/subscriptions/plans').then(res => setPlans(res.data));
+        axios.get('/api/menus?limit=100').then(res => setMenus(res.data.menus));
+        axios.get('/api/subscriptions/my', { withCredentials: true }).then(res => setActiveSub(res.data));
     }, []);
 
     const premiumPlans = plans.filter(p => p.type_name === 'Premium');
@@ -45,13 +45,13 @@ export default function Subscriptions() {
             return;
         }
         try {
-            await axios.post('http://localhost:5000/api/subscriptions',
+            await axios.post('/api/subscriptions',
                 { plan_id: selectedPlan.id, menu_ids: filled },
                 { withCredentials: true }
             );
             toast.success('Subscription activated!');
             setDialogOpen(false);
-            const res = await axios.get('http://localhost:5000/api/subscriptions/my', { withCredentials: true });
+            const res = await axios.get('/api/subscriptions/my', { withCredentials: true });
             setActiveSub(res.data);
         } catch (err) {
             toast.error(err.response?.data?.message || 'Failed to subscribe');

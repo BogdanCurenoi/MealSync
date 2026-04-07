@@ -12,7 +12,7 @@ export default function DietDetail() {
     const [diet, setDiet] = useState(null);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/diets/${id}`).then(res => setDiet(res.data));
+        axios.get(`/api/diets/${id}`).then(res => setDiet(res.data));
     }, [id]);
 
     if (!diet) return null;

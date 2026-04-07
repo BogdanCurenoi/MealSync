@@ -33,7 +33,7 @@ export default function Register() {
         }
         setLoading(true);
         try {
-            await axios.post('http://localhost:5000/api/auth/register', form, { withCredentials: true });
+            await axios.post('/api/auth/register', form, { withCredentials: true });
             toast.success('Account created! Please log in.');
             navigate('/login');
         } catch (err) {

@@ -22,7 +22,7 @@ export default function Login() {
         }
         setLoading(true);
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', form, { withCredentials: true });
+            const res = await axios.post('/api/auth/login', form, { withCredentials: true });
             setUser(res.data);
             toast.success(`Welcome back, ${res.data.user_name}!`);
             navigate('/');

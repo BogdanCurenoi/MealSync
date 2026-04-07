@@ -14,7 +14,7 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 
-const API = 'http://localhost:5000/api/user';
+const API = '/api/user';
 const inputSx = { '& .MuiOutlinedInput-root': { borderRadius: '12px' } };
 
 const SectionCard = ({ title, icon, children }) => (
@@ -52,13 +52,13 @@ export default function Profile() {
         axios.get(`${API}/profile`, { withCredentials: true }).then(res => setProfile(res.data));
         axios.get(`${API}/alergies`, { withCredentials: true }).then(res => setAlergies(res.data));
         axios.get(`${API}/diets`, { withCredentials: true }).then(res => setDiets(res.data));
-        axios.get('http://localhost:5000/api/coupons/my', { withCredentials: true }).then(res => setMyCoupons(res.data));
-        axios.get('http://localhost:5000/api/subscriptions/my', { withCredentials: true }).then(res => setActiveSub(res.data));
-        axios.get('http://localhost:5000/api/menus?limit=100').then(res => setAllMenus(res.data.menus));
+        axios.get('/api/coupons/my', { withCredentials: true }).then(res => setMyCoupons(res.data));
+        axios.get('/api/subscriptions/my', { withCredentials: true }).then(res => setActiveSub(res.data));
+        axios.get('/api/menus?limit=100').then(res => setAllMenus(res.data.menus));
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/orders/my?page=${orderPage}`, { withCredentials: true })
+        axios.get(`/api/orders/my?page=${orderPage}`, { withCredentials: true })
             .then(res => setOrders(res.data));
     }, [orderPage]);
 
@@ -121,7 +121,7 @@ export default function Profile() {
 
     const handleCancelSub = async () => {
         try {
-            await axios.put('http://localhost:5000/api/subscriptions/cancel', {}, { withCredentials: true });
+            await axios.put('/api/subscriptions/cancel', {}, { withCredentials: true });
             toast.success('Subscription cancelled');
             setActiveSub(null);
         } catch {
@@ -131,10 +131,10 @@ export default function Profile() {
 
     const handleUpdateSubMenus = async () => {
         try {
-            await axios.put('http://localhost:5000/api/subscriptions/menus', { menu_ids: subMenus.filter(Boolean) }, { withCredentials: true });
+            await axios.put('/api/subscriptions/menus', { menu_ids: subMenus.filter(Boolean) }, { withCredentials: true });
             toast.success('Daily menus updated');
             setSubMenuDialogOpen(false);
-            const res = await axios.get('http://localhost:5000/api/subscriptions/my', { withCredentials: true });
+            const res = await axios.get('/api/subscriptions/my', { withCredentials: true });
             setActiveSub(res.data);
         } catch (err) {
             toast.error(err.response?.data?.message || 'Failed to update menus');

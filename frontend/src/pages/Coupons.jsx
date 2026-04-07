@@ -13,8 +13,8 @@ export default function Coupons() {
     const [myCoupons, setMyCoupons] = useState([]);
 
     const fetchData = () => {
-        axios.get('http://localhost:5000/api/coupons/types').then(res => setCouponTypes(res.data));
-        axios.get('http://localhost:5000/api/coupons/my', { withCredentials: true }).then(res => setMyCoupons(res.data));
+        axios.get('/api/coupons/types').then(res => setCouponTypes(res.data));
+        axios.get('/api/coupons/my', { withCredentials: true }).then(res => setMyCoupons(res.data));
     };
 
     useEffect(() => { fetchData(); }, []);
@@ -25,7 +25,7 @@ export default function Coupons() {
             return;
         }
         try {
-            const res = await axios.post('http://localhost:5000/api/coupons/buy', { coupon_type_id: coupon.id }, { withCredentials: true });
+            const res = await axios.post('/api/coupons/buy', { coupon_type_id: coupon.id }, { withCredentials: true });
             setUser(prev => ({ ...prev, loyalty_points: res.data.loyalty_points }));
             toast.success('Coupon purchased!');
             fetchData();

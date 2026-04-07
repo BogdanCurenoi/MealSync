@@ -18,7 +18,7 @@ export default function MenuDetail() {
     const { user } = useAuth();
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/menus/${id}`).then(res => setMenu(res.data));
+        axios.get(`/api/menus/${id}`).then(res => setMenu(res.data));
     }, [id]);
 
     const handleAddToCart = () => {

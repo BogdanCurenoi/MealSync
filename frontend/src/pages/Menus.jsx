@@ -12,7 +12,7 @@ export default function Menus() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/menus?page=${page}&limit=8`)
+        axios.get(`/api/menus?page=${page}&limit=8`)
             .then(res => setData(res.data));
     }, [page]);
 

@@ -10,7 +10,7 @@ export default function Diets() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/diets').then(res => setDiets(res.data));
+        axios.get('/api/diets').then(res => setDiets(res.data));
     }, []);
 
     return (

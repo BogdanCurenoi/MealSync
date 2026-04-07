@@ -19,10 +19,10 @@ export default function AdminMenus() {
     const [form, setForm] = useState(emptyMenu);
     const [page, setPage] = useState(1);
 
-    const fetch = () => axios.get('http://localhost:5000/api/admin/menus', { withCredentials: true }).then(res => setMenus(res.data));
+    const fetch = () => axios.get('/api/admin/menus', { withCredentials: true }).then(res => setMenus(res.data));
     useEffect(() => {
         fetch();
-        axios.get('http://localhost:5000/api/admin/meals', { withCredentials: true }).then(res => setAllMeals(res.data));
+        axios.get('/api/admin/meals', { withCredentials: true }).then(res => setAllMeals(res.data));
     }, []);
 
     const openCreate = () => { setEditing(null); setForm(emptyMenu); setDialogOpen(true); };
@@ -35,10 +35,10 @@ export default function AdminMenus() {
     const handleSave = async () => {
         try {
             if (editing) {
-                await axios.put(`http://localhost:5000/api/admin/menus/${editing.id}`, form, { withCredentials: true });
+                await axios.put(`/api/admin/menus/${editing.id}`, form, { withCredentials: true });
                 toast.success('Menu updated');
             } else {
-                await axios.post('http://localhost:5000/api/admin/menus', form, { withCredentials: true });
+                await axios.post('/api/admin/menus', form, { withCredentials: true });
                 toast.success('Menu created');
             }
             setDialogOpen(false);
@@ -50,7 +50,7 @@ export default function AdminMenus() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/admin/menus/${id}`, { withCredentials: true });
+            await axios.delete(`/api/admin/menus/${id}`, { withCredentials: true });
             toast.success('Menu deleted');
             fetch();
         } catch {

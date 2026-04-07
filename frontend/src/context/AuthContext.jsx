@@ -8,14 +8,14 @@ export const AuthProvider = ({ children, onLogout }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/auth/me', { withCredentials: true })
+        axios.get('/api/auth/me', { withCredentials: true })
             .then(res => setUser(res.data))
             .catch(() => setUser(null))
             .finally(() => setLoading(false));
     }, []);
 
     const logout = async () => {
-        await axios.post('http://localhost:5000/api/auth/logout', {}, { withCredentials: true });
+        await axios.post('/api/auth/logout', {}, { withCredentials: true });
         setUser(null);
         localStorage.removeItem('mealsync_cart');
         if (onLogout) onLogout();
