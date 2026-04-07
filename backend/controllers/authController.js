@@ -42,10 +42,15 @@ const login = async (req, res) => {
         { expiresIn: '7d' }
     );
 
-    res.cookie('mealsync_token', token, {
+    const cookieOptions = {
         httpOnly: true,
-        maxAge: 7 * 24 * 60 * 60 * 1000
-    });
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        sameSite: 'none',
+        secure: true,
+        path: '/'
+    };
+
+    res.cookie('mealsync_token', token, cookieOptions);
 
     res.json({
         id: user.id,
@@ -59,7 +64,11 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-    res.clearCookie('mealsync_token');
+    res.clearCookie('mealsync_token', {
+        sameSite: 'none',
+        secure: true,
+        path: '/'
+    });
     res.json({ message: 'Logged out' });
 };
 
